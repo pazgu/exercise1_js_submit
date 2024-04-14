@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //Write an HTML page that inserts 5 random and integer numbers between 0 and 99 into an array (the array is 5 in size).
+        // The page calculates the average and sum of elements in the array and prints them
+        const arr = [];
+        let sum = 0;
+        let count = 0;
+        for (let i = 0; i < 5; i++) {
+            arr[i] = Math.floor(Math.random() * 100)
+            sum += arr[i];
+            count++;
+        }
+        console.log("Sum:", sum);
+        console.log("Average:", sum / count);
+    </script>
+</body>
+</html>

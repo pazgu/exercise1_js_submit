@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //Write a function that switches between values ​​of two variables from an external scope.
+        // Must be used to check by reading from the page
+        function switch_values(num1, num2) {
+            let temp = num1;
+            num1 = num2;
+            num2 = temp;
+            return [num1, num2];
+        }
+        let num1 = 7;
+        let num2 = 8;
+        document.write("switchen numbers: "+ switch_values(num1, num2))
+    </script>
+</body>
+</html>

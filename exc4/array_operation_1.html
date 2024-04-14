@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    function addBook(books, bookName, numberOfPages) {
+
+        const newBook = {
+            name: bookName,
+            pages: numberOfPages
+        };
+        books.push(newBook);
+}
+    const myBooks = [
+        { name: "Book 1", pages: 100 },
+        { name: "Book 2", pages: 150 }
+    ];
+
+    addBook(myBooks, "Book 3", 200);
+    addBook(myBooks, "Book 4", 120);
+    console.log(myBooks);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Write a function that accepts a positive integer num as an argument and calculates the sum 1+2+···+num 
+        // and returns it using return. Test by reading from the page and printing the return value. 
+        // For example for an argument of 4 it will return 1+2+3+4 ZA 10
+        function addNums(num) {
+            let sum = 0 ;
+            for (let i = 1; i<= num; i++){
+                sum +=i;
+            }
+            return sum;
+        }
+        let num = 4;
+        document.write("The calculated sum: "+ addNums(num));
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //Create an array of objects that represent each single book. Each object has a field called the name of the book and a field for the number of pages.
+        // Initialize the array with five books, then go through the array and print the name and number of pages for each object to the console
+    const books = [
+    { name: "Book 1", pages: 100 },
+    { name: "Book 2", pages: 150 },
+    { name: "Book 3", pages: 200 },
+    { name: "Book 4", pages: 120 },
+    { name: "Book 5", pages: 180 }
+];
+
+books.forEach(book => {
+    console.log(`Book Name: ${book.name}, Pages: ${book.pages}`);
+});
+    </script>
+</body>
+</html>

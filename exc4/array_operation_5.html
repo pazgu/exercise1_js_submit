@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const numbers = [4, 8, 1, 9];
+
+    function updateArray(number) {
+        const index = numbers.findIndex(n => n === number);
+        if (index !== -1) {
+            numbers[index]++;
+            console.log("Array after update:", numbers);
+        } else {
+            console.log("Number not found in the array.");
+        }
+    }
+    updateArray(8); 
+    updateArray(10);
+</script>
+</body>
+</html>

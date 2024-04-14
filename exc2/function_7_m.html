@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+    <form>  
+        <input type = "button" onclick = "ast(4)" value = "Message Print">   
+    </form>     
+<body>
+    <script type = "text/javascript">
+        //Write a function that accepts as an argument an integer that represents the number of asterisks on each side and prints an isosceles right triangle. Accordingly. 
+        //Test by calling a function from within the page
+        //f.e if the number 4 was transferred, then it will be printed
+        // *
+        // **
+        // ***
+        // ****
+        function ast(num){
+            let str= ""
+            for (let i = 1; i<= num; i++){
+              for(let j=1; j<= i; j++){
+                str += "*";
+              }  
+              console.log(str);
+              str= ""
+            }
+        }
+       
+    </script>
+</body>
+</html>

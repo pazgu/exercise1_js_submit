@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+       //Write a function that accepts an array and returns the number of elements in the array without repetitions. 
+       //For example, for 1,6,7,6,8,1, 2 will be returned because only two numbers are without repetitions, i.e. 7,8
+        function repetitions(arr) {
+            let count = 0;
+            for (let i = 0; i < arr.length; i++) {
+                let unique = true;
+                for (let j = 0; j < arr.length; j++) {
+                    if (i !== j && arr[i] === arr[j]) {
+                        unique = false;
+                        break;
+                    }
+                }
+                if (unique) {
+                    count++;
+                }
+            }
+            return count;
+        }
+        let arr = [1, 2, 1, 4, 5, 7, 7, 1, 4, 2] 
+        document.write(repetitions(arr));
+    </script>
+</body>
+</html>

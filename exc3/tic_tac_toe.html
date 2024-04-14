@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function createBoard(board) {
+  for (let i = 0; i < 3; i++) {
+      let row = "";
+      for (let j = 0; j < 3; j++) {
+          if (board[i][j] === "X") {
+              row += "\x1b[31m X \x1b[0m";
+          } else if (board[i][j] === "O") {
+              row += "\x1b[34m O \x1b[0m";
+          } else {
+              row += "   ";
+          }
+          if (j < 2) {
+              row += "| ";
+          }
+      }
+      console.log(row);
+      if (i < 2) {
+          console.log("-------------");
+      }
+  }
+  console.log(" ");
+}
+//for the challenge.. for now I have no use in the functionality of game with more than 3x3 matrix
+function create_board_by_size() {
+  let size = parseInt(
+      prompt(
+        "Please insert the number represent the size of the board you want to play with (min-3 max-10): "
+      )
+    );
+  while (true) { 
+    if (!isNaN(size) && size >= 3 && size <= 10) {
+      break;
+    }
+    size = parseInt(
+      prompt(
+        "Please insert the number represent the size of the board you want to play with (min-3 max-10): "
+      )
+    );
+  }
+  let board = [];
+  for (let i = 0; i < size; i++) {
+      let row = [];
+      for (let j = 0; j < size; j++) {
+          row.push(" ");
+      }
+      board.push(row);
+  }
+  return board;
+}
+
+function winDraw(board, name1, name2) {
+  // Check rows
+  for (let row = 0; row < 3; row++) {
+      if (board[row][0] === board[row][1] && board[row][1] === board[row][2]) {
+          if (board[row][0] === "X") {
+              console.log(`Player ${name1} has won`);
+              return name1;
+          } else if (board[row][0] === "O") {
+              console.log(`Player ${name2} has won`);
+              return name2;
+          }
+      }
+  }
+  // Check columns
+  for (let col = 0; col < 3; col++) {
+      if (board[0][col] === board[1][col] && board[1][col] === board[2][col]) {
+          if (board[0][col] === "X") {
+              console.log(`Player ${name1} has won`);
+              return name1;
+          } else if (board[0][col] === "O") {
+              console.log(`Player ${name2} has won`);
+              return name2;
+          }
+      }
+  }
+  // Check diagonals
+  if ((board[0][0] === board[1][1] && board[1][1] === board[2][2]) ||
+      (board[0][2] === board[1][1] && board[1][1] === board[2][0])) {
+      if (board[1][1] === "X") {
+          console.log(`Player ${name1} has won`);
+          return name1;
+      } else if (board[1][1] === "O") {
+          console.log(`Player ${name2} has won`);
+          return name2;
+      }
+  }
+  return "draw";
+}
+
+function playerTurn(board, row, column, player1) {
+  if (board[row][column] === " ") {
+      board[row][column] = player1 ? "X" : "O";
+      createBoard(board);
+      return true;
+  } else {
+      console.log("Sorry, the cell is already marked.");
+      return false;
+  }
+}
+
+function game() {
+  const board = [[" ", " ", " "],
+                 [" ", " ", " "],
+                 [" ", " ", " "]];
+  let counter = 0;
+  let player1 = true;
+  let winsPlayer1 = [];
+  let winsPlayer2 = [];
+  let draws = [];
+  winsPlayer1[0] = 0;
+  winsPlayer2[0] = 0;
+  draws[0] = 0;
+  createBoard(board);
+  const name1 = prompt("Please insert player 1's name:");
+  const name2 = prompt("Please insert player 2's name:");
+  console.log(`Player 1: ${name1}, Player 2: ${name2}`);
+  while (true) {
+      const currentPlayer = player1 ? name1 : name2;
+      console.log(`Player ${currentPlayer} Chance`);
+      const i = parseInt(prompt("Please insert the row number you want to mark (0 to 2):"));
+      const j = parseInt(prompt("Please insert the column number you want to mark (0 to 2):"));
+
+      if (i >= 0 && i < 3 && j >= 0 && j < 3) {
+          counter += playerTurn(board, i, j, player1);
+          player1 = !player1; // Switch players
+
+          const winner = winDraw(board, name1, name2);
+          if (counter === 9 && winner === "draw") {
+              draws[0]++;
+              console.log("Draw!");
+              break;
+          } else if (winner === name1) {
+              winsPlayer1[0]++;
+              break;
+          } else if (winner === name2) {
+              winsPlayer2++;
+              break;
+          }
+      } else {
+          console.log("Out of border. Pick another one.");
+      }
+  }
+  return [winsPlayer1, winsPlayer2, draws];
+}
+
+function loadGameAgain() {
+  let winsPlayer1Total = 0;
+  let winsPlayer2Total = 0;
+  let drawsTotal = 0;
+  function continueGame() {
+      let total_wins = game();
+      winsPlayer1Total += total_wins[0]
+      winsPlayer2Total += total_wins[1]
+      drawsTotal += total_wins[2]
+      const answer = prompt("Press 'Y' to continue to another game or 'N' to quit:");
+      if (answer !== null) {
+          if (answer.toUpperCase() === 'Y') {
+              game();
+              continueGame();
+          } else if (answer.toUpperCase() === 'N') {
+              console.log("Goodbye!");
+              console.log("\nGame Stats:");
+              console.log(`Player 1 Wins: ${winsPlayer1Total}`);
+              console.log(`Player 2 Wins
+              : ${winsPlayer2Total}`);
+              console.log(`Draws: ${drawsTotal}`);
+          } else {
+              console.log("Invalid input. Please enter 'Y' to continue or 'N' to quit.");
+              continueGame();
+          }
+      }
+  }
+  continueGame();
+}
+
+loadGameAgain();
+
+    </script>
+</body>
+</html>

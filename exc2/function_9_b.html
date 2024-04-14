@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      //Write a function that accepts several members of the Pabonacci series and prints them. 
+      //For example, if the number obtained is 3, then the first 3 terms will be printed, i.e. 2, 1, 1.
+      //If the number 5 was received, then the first 5 terms will be printed, i.e. 5, 3, 2, 1, 1. 
+      function fibo(arr, num) {
+        let new_arr = [];
+        if (num < arr.length){
+            for (let i=0; i< num; i++) {
+                console.log(arr[i]);
+                new_arr.push(arr[i])
+            }
+            return new_arr;
+        }
+        else
+            console.log("Please insert number smaller than the array's length");
+      }
+      const num = 5;
+      const arr = [1,1,2,3,5,8,13,21,34,55,89,144];
+      document.write(fibo(arr, num));
+    </script>
+</body>
+</html>

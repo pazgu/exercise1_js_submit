@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //Write a function that accepts two arrays of integers as arguments. 
+        //Both arrays are the same length and contain numbers without repetitions. 
+        //Return the number of elements that appear in both arrays.
+        function similarities(arr1, arr2) {
+            let count = 0;
+            for (let i = 0; i < arr1.length; i++){
+                if (arr2.includes(arr1[i])) {
+                    count++;
+                }   
+            }
+            return count;
+        }
+        let arr1 = [1, 2, 3, 4, 5] 
+        let arr2 = [7, 2, 6, 9, 1] 
+        document.write("The numberes appear in both arrays: " + similarities(arr1, arr2));
+    </script>
+</body>
+</html>
