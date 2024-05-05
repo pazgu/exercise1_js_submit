@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="incrementCounter1()">Increment: </button>
+    <button onclick="incrementCounter2()">Increment: </button>
+    <p id="counter1"></p>
+    <p id="counter2"></p>
+    <script>
+        let counter1;
+        let counter2;
+        function incrementCounter1() {
+            if(counter1 == null) {
+                counter1 = 0;
+            }
+            else {
+                counter1 = Number(localStorage.getItem("counter1"));
+                counter1++;
+                localStorage.setItem("counter1", counter1);
+                document.getElementById("counter1").innerText =  `counter 1 value: ${counter1}`;
+            }
+        }
+
+        function incrementCounter2() {
+            if (counter2 == null) {
+                counter2 = 0;
+            }
+            else {
+                counter2 = Number(localStorage.getItem("counter2"));
+                counter2++;
+                localStorage.setItem("counter2", counter2);
+                document.getElementById("counter2").innerText =  `counter 2 value: ${counter2}`;
+            }
+        }
+
+    </script>
+</body>
+</html>

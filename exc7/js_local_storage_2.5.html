@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>To Do List</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+  }
+  #todo-container {
+    max-width: 400px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  #todo-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  .todo-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .completed {
+    color: green;
+    text-decoration: line-through;
+  }
+</style>
+</head>
+<body>
+
+<div id="todo-container">
+  <h1>To Do List</h1>
+  <h2>Add item to list</h2>
+  <input type="text" id="todo" name="todo" />
+  <button onclick="addToList()">Add</button>
+  <br /><br />
+  <button onclick="showList()">Show list</button>
+  <ul id="tasks"></ul>
+</div>
+
+<script>
+let todos = localStorage.getItem("tasks");
+todos = todos == null ? [] : JSON.parse(todos);
+
+function addToList() {
+  let todo = document.getElementById("todo").value;
+  if (todo == "") return;
+  else {
+    todos.push({ value: todo, completed: false });
+    localStorage.setItem("tasks", JSON.stringify(todos));
+    renderTasks();
+  }
+}
+
+function showList() {
+  let todoList = document.getElementById('tasks');
+  todoList.innerHTML = '';
+  if (todoList.style.display === "none") {
+    todoList.style.display = "block";
+    renderTasks();
+  } else {
+    todoList.style.display = "none";
+  }
+}
+
+function toggleComplete(index) {
+  todos[index].completed = !todos[index].completed;
+  localStorage.setItem("tasks", JSON.stringify(todos));
+  renderTasks();
+}
+
+function renderTasks() {
+  const todoList = document.getElementById('tasks');
+  todoList.innerHTML = '';
+
+  todos.forEach((task, index) => {
+    const li = document.createElement('li');
+    li.classList.add('todo-item');
+    li.innerHTML = `
+      <input type="checkbox" id="task${index}" ${task.completed ? 'checked' : ''} onclick="toggleComplete(${index})">
+      <label for="task${index}" class="${task.completed ? 'completed' : ''}">${task.value}</label>
+      <button onclick="removeTask(${index})">Remove</button>
+    `;
+    todoList.appendChild(li);
+  });
+}
+
+function removeTask(index) {
+  todos.splice(index, 1);
+  localStorage.setItem("tasks", JSON.stringify(todos));
+  renderTasks();
+}
+
+// Initial rendering
+renderTasks();
+</script>
+
+</body>
+</html>
