@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+  }
+  #quiz-container {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .question {
+    margin-bottom: 20px;
+  }
+  .answer {
+    margin-bottom: 10px;
+  }
+  .correct {
+    color: green;
+  }
+  .incorrect {
+    color: red;
+  }
+</style>
+</head>
+<body>
+
+<div id="quiz-container">
+  <h1>Quiz</h1>
+  <div id="questions"></div>
+  <button onclick="submitQuiz()">Submit Quiz</button>
+  <div id="result"></div>
+</div>
+
+<script>
+const quizData = [
+  {
+    question: "What is the capital of France?",
+    answers: ["London", "Paris", "Berlin", "Madrid"],
+    correctAnswer: 1
+  },
+  {
+    question: "What is the largest planet in our solar system?",
+    answers: ["Venus", "Mars", "Jupiter", "Saturn"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which of these animals does not belong to the mammal class?",
+    answers: ["Bird", "Chicken" , "Cow", "Fish"],
+    correctAnswer: 3
+  }
+  
+];
+
+function displayQuiz() {
+  const questionsDiv = document.getElementById('questions');
+  let html = '';
+  quizData.forEach((questionObj, index) => {
+    html += `<div class="question">${index + 1}. ${questionObj.question}</div>`;
+    questionObj.answers.forEach((answer, answerIndex) => {
+      html += `<div class="answer">
+        <input type="radio" name="question${index}" value="${answerIndex}">
+        <label>${answer}</label>
+      </div>`;
+    });
+  });
+  questionsDiv.innerHTML = html;
+}
+
+function submitQuiz() {
+  const answers = [];
+  quizData.forEach((questionObj, index) => {
+    const selectedAnswer = document.querySelector(`input[name="question${index}"]:checked`);
+    if (selectedAnswer) {
+      answers.push(parseInt(selectedAnswer.value));
+    } else {
+      answers.push(-1); // No answer selected
+    }
+  });
+  localStorage.setItem('quizAnswers', JSON.stringify(answers));
+  displayResult(answers);
+}
+
+function displayResult(answers) {
+  const resultDiv = document.getElementById('result');
+  let correctCount = 0;
+  let html = '<h2>Quiz Result</h2>';
+  quizData.forEach((questionObj, index) => {
+    html += `<div class="question">${index + 1}. ${questionObj.question}</div>`;
+    questionObj.answers.forEach((answer, answerIndex) => {
+      const selected = answers[index] === answerIndex;
+      const correct = questionObj.correctAnswer === answerIndex;
+      const colorClass = selected ? (correct ? 'correct' : 'incorrect') : '';
+      html += `<div class="answer ${colorClass}">
+        <input type="radio" disabled ${selected ? 'checked' : ''}>
+        <label>${answer}</label>
+      </div>`;
+      if (selected && correct) {
+        correctCount++;
+      }
+    });
+  });
+  html += `<div><strong>Correct Answers:</strong> ${correctCount} out of ${quizData.length}</div>`;
+  resultDiv.innerHTML = html;
+}
+
+// Check if answers are stored in local storage
+const storedAnswers = localStorage.getItem('quizAnswers');
+if (storedAnswers) {
+  const parsedAnswers = JSON.parse(storedAnswers);
+  displayResult(parsedAnswers);
+} else {
+  displayQuiz();
+}
+</script>
+
+</body>
+</html>

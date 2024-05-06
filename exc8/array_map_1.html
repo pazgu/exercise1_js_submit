@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const names = ["Alice", "Bob", "Charlie", "David", "Emily"];
+        let li = names.map(name => `<li>${name}</li>`);
+        let ol = document.createElement("ol");
+        document.body.appendChild(ol);
+        ol.innerHTML += li;
+    </script>
+</body>
+</html>

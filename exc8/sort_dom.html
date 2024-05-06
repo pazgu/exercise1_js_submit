@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sort Array</title>
+  </head>
+  <body>
+    <script>
+      let numbers = [7, -2, 5, 3, 1, 4];
+
+      function sort_array(numbers) {
+        const sortedArr = [...numbers];
+        for (let i = 0; i < sortedArr.length - 1; i++) {
+          for (let j = 0; j < sortedArr.length - 1 - i; j++) {
+            if (sortedArr[j] > sortedArr[j + 1]) {
+              const temp = sortedArr[j];
+              sortedArr[j] = sortedArr[j + 1];
+              sortedArr[j + 1] = temp;
+            }
+            displayStep(sortedArr);
+          }
+        }
+        return sortedArr;
+      }
+
+      function displayStep(arr) {
+        let li = arr.map((num) => `<li>${num}</li>`).join("");
+        let ol = document.createElement("ol");
+        ol.innerHTML = li;
+        document.body.appendChild(ol);
+      }
+
+      sort_array(numbers);
+    </script>
+  </body>
+</html>

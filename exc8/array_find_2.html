@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+     const people =  [
+        { name: "Moshe Kupernikos", age: 33 },
+        { name: "Shimon", age: 21 },
+        { name: "Joe", age: 34 },
+      ] ;
+
+     let res = people.find(element => element.age == 33);
+     if (res != undefined){
+        for (let i = 0; i < people.length; i++){
+            if (people[i].age == 33)
+            console.log(people[i]);
+        }
+     }
+     else {
+        console.log("no");
+     }
+
+     let res2 = people.find(element => element.age == 11);
+     if (res2 != undefined){
+        for (let i = 0; i < people.length; i++){
+            if (people[i].age == 33)
+            console.log(people[i]);
+        }
+     }
+     else {
+        console.log("no");
+     }
+
+     let res3= people.findIndex(element => element.age == 33);
+     if (res3 === -1) {
+        console.log("no");
+     }
+     else {
+        console.log(people[res3]);
+     }
+    </script>
+</body>
+</html>
