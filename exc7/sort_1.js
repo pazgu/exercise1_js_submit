@@ -20,5 +20,38 @@ function sort_array(arr) {
 
 //time complexity of O(n^2)
 
+// let numbers =  [2, 1, 9, 1, 4, 9, 8];
+// console.log(sort_array(numbers, index));
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+function computeMin(numbers, indexToStart){
+    // let min = numbers[0];
+    let index = indexToStart;
+    for (let i = indexToStart; i < numbers.length; i++) {
+        if (numbers[i] < numbers[index]) {
+            // min = numbers[i];
+            index = i;
+        }
+    }
+    return index;
+}
+
+function switch_values(numbers, i, j) {
+    let temp = numbers[i];
+    numbers[i] = numbers[j];
+    numbers[j] = temp;
+}
+
+function sort_array(numbers) {
+    let indexToStart = 0;
+    for (let i = 0; i < numbers.length; i++) {
+        let index = computeMin(numbers, i);
+        indexToStart++;
+        switch_values(numbers, i, index);
+    }
+    return numbers;
+}
+
 let numbers =  [2, 1, 9, 1, 4, 9, 8];
 console.log(sort_array(numbers));
