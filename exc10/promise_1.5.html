@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Progress Bar Example</title>
+    <style>
+      #progress-container {
+        width: 100%;
+        background-color: #f3f3f3;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin: 20px 0;
+        display: none;
+      }
+      #progress-bar {
+        width: 0%;
+        height: 30px;
+        background-color: #4caf50;
+        text-align: center;
+        line-height: 30px;
+        color: white;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <button type="button" onclick="startProgress()">Start Progress</button>
+    <div id="progress-container">
+      <div id="progress-bar">0%</div>
+    </div>
+    <script>
+      function startProgress() {
+        document.getElementById("progress-container").style.display = "block";
+        let progressBar = document.getElementById("progress-bar");
+        progressBar.style.width = "0%";
+        progressBar.innerText = "0%";
+
+        function updateProgress() {
+          return new Promise((resolve) => {
+            let width = 0;
+            let interval = setInterval(() => {
+              width += 1;
+              progressBar.style.width = width + "%";
+              progressBar.innerText = width + "%";
+              if (width >= 100) {
+                clearInterval(interval);
+                resolve();
+              }
+            }, 20); // 2 seconds total
+          });
+        }
+
+        updateProgress().then(() => {
+          console.log("Progress completed!");
+        });
+      }
+    </script>
+  </body>
+</html>

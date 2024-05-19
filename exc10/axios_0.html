@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p>comments:</p>
+    <table></table>
+    <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
+    <script>
+      axios
+        .get("https://jsonplaceholder.typicode.com/comments")
+        .then(function (response) {
+          new_p = document.querySelector("p");
+          new_p.innerHTML += response.data.length;
+          new_table = document.querySelector("table");
+          response.data.forEach((element) => {
+            let row = `<tr><td>${element.name}</td><td>${element.body}</td></tr>`;
+            new_table.innerHTML += row;
+          });
+        })
+        .catch(console.error());
+    </script>
+  </body>
+</html>

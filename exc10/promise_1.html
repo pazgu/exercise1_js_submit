@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button type="button" onclick="promiseSuccess()">Success</button>
+    <button type="button" onclick="promiseFail()">Failure</button>
+    <script>
+      const resolveHandler = (message) => console.log(message);
+      const rejectHandler = (message) => console.error(message);
+
+      function promiseSuccess() {
+        const promise = new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve("This is a success message");
+          }, 2000);
+        });
+        return promise;
+      }
+
+      function promiseFail() {
+        const promise = new Promise((resolve, reject) => {
+          setTimeout(() => {
+            reject("This is a failure message");
+          }, 3000);
+        });
+        return promise;
+      }
+
+      let promise = promiseSuccess();
+      promise.then(resolveHandler).catch(rejectHandler);
+    </script>
+  </body>
+</html>

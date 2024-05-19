@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .spinner {
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-left-color: #7983ff;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="spinner"></div>
+    <p>comments:</p>
+    <table class="hidden"></table>
+    <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
+    <script>
+      const spinner = document.querySelector(".spinner");
+      const table = document.querySelector("table");
+
+      axios
+        .get("https://jsonplaceholder.typicode.com/comments")
+        .then(function (response) {
+          spinner.classList.add("hidden"); // Hide the spinner
+          table.classList.remove("hidden"); // Show the table
+          const commentsCount = response.data.length;
+          const paragraph = document.querySelector("p");
+          paragraph.innerHTML += commentsCount;
+          response.data.forEach((element) => {
+            let row = `<tr><td>${element.name}</td><td>${element.body}</td></tr>`;
+            table.innerHTML += row;
+          });
+        })
+        .catch(console.error);
+    </script>
+  </body>
+</html>
