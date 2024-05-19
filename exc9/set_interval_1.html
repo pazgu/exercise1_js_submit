@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button type="button" onclick="startInterval()">Start</button>
+    <button type="button" onclick="stopInterval()">Stop</button>
+    <script>
+      let startDate;
+      let intervalId;
+      let new_p = document.createElement("p");
+      document.body.appendChild(new_p);
+
+      function startInterval() {
+        startDate = new Date();
+        intervalId = setInterval(displayDate, 1000);
+      }
+
+      function displayDate() {
+        let endTime = new Date();
+        let timeDiff = Math.round((endTime - startDate) / 1000);
+        document.querySelector("p").innerHTML = timeDiff;
+      }
+
+      function stopInterval() {
+        clearInterval(intervalId);
+      }
+    </script>
+  </body>
+</html>

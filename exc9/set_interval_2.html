@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="sorted-array"></div>
+    <script>
+      function sortWithDOM(arr) {
+        let n = arr.length;
+        let i = 0,
+          j = 0;
+        let intervalId = setInterval(function () {
+          if (i < n) {
+            if (j < n - i - 1) {
+              if (arr[j] > arr[j + 1]) {
+                let temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+                document.getElementById("sorted-array").innerHTML =
+                  arr.join(", ");
+              }
+              j++;
+            } else {
+              j = 0;
+              i++;
+            }
+          } else {
+            clearInterval(intervalId); // Stop the interval when sorting is done
+          }
+        }, 1000);
+      }
+
+      window.addEventListener("load", function () {
+        let array = [5, 3, 8, 4, 2];
+        document.getElementById("sorted-array").innerHTML = array.join(", ");
+        sortWithDOM(array);
+      });
+    </script>
+  </body>
+</html>
