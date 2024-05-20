@@ -41,8 +41,8 @@
       axios
         .get("https://jsonplaceholder.typicode.com/comments")
         .then(function (response) {
-          spinner.classList.add("hidden"); // Hide the spinner
-          table.classList.remove("hidden"); // Show the table
+          spinner.classList.add("hidden");
+          table.classList.remove("hidden");
           const commentsCount = response.data.length;
           const paragraph = document.querySelector("p");
           paragraph.innerHTML += commentsCount;
