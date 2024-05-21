@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const resolveHandler = (message) => console.log(message); //log the last promise occured
+      const rejectHandler = (message) => console.error(message);
+
+      function getUser(obj) {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => resolve({ id: obj.id, name: obj.name }), 1000);
+        }).then((user) => {
+          console.log(`id: ${user.id}, name: ${user.name}`);
+          return `name: ${user.name}`;
+        });
+      }
+
+      let promise = getUser({ id: 5, name: "paz" });
+      promise.then(resolveHandler).catch(rejectHandler);
+    </script>
+  </body>
+</html>
