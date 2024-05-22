@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="sum"></div>
+
+    <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
+    <script>
+      async function fetchPosts() {
+        try {
+          const posts = axios.get("https://jsonplaceholder.typicode.com/posts");
+
+          const users = axios.get("https://jsonplaceholder.typicode.com/users");
+
+          const comments = axios.get(
+            "https://jsonplaceholder.typicode.com/comments"
+          );
+          const [postsResponse, usersResponse, commentsResponse] =
+            await Promise.all([posts, users, comments]);
+
+          document.getElementById("sum").innerText = `Sum Total: ${
+            postsResponse.data.length +
+            usersResponse.data.length +
+            commentsResponse.data.length
+          }`;
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+
+      fetchPosts();
+    </script>
+  </body>
+</html>

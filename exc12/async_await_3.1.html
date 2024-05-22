@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="posts-count"></div>
+    <div id="users-count"></div>
+    <div id="comments-count"></div>
+
+    <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
+    <script>
+      async function fetchData() {
+        try {
+          const postsPromise = axios.get(
+            "https://jsonplaceholder.typicode.com/posts"
+          );
+          const usersPromise = axios.get(
+            "https://jsonplaceholder.typicode.com/users"
+          );
+          const commentsPromise = axios.get(
+            "https://jsonplaceholder.typicode.com/comments"
+          );
+
+          const [postsResponse, usersResponse, commentsResponse] =
+            await Promise.all([postsPromise, usersPromise, commentsPromise]);
+
+          document.getElementById(
+            "posts-count"
+          ).innerText = `Number of posts: ${postsResponse.data.length}`;
+          document.getElementById(
+            "users-count"
+          ).innerText = `Number of users: ${usersResponse.data.length}`;
+          document.getElementById(
+            "comments-count"
+          ).innerText = `Number of comments: ${commentsResponse.data.length}`;
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+
+      fetchData();
+    </script>
+  </body>
+</html>

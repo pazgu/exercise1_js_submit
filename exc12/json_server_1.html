@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button type="button" onclick="postData()">Click</button>
+    <p id="status"></p>
+
+    <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
+    <script>
+      async function postData() {
+        const statusElement = document.getElementById("status");
+        const users = [];
+        const books = [];
+
+        for (let i = 1; i <= 500; i++) {
+          users.push({
+            id: i,
+            firstName: `User${i}`,
+            lastName: `LastName${i}`,
+          });
+
+          books.push({
+            id: i,
+            name: `Book${i}`,
+            author: `Author${i}`,
+            numPages: Math.floor(Math.random() * 1000) + 1,
+          });
+        }
+
+        try {
+          for (const user of users) {
+            await axios.post("http://localhost:8001/users", user);
+          }
+
+          for (const book of books) {
+            await axios.post("http://localhost:8001/books", book);
+          }
+
+          statusElement.innerText = "Data posted successfully!";
+        } catch (error) {
+          console.error(error);
+          statusElement.innerText = "Error posting data";
+        }
+      }
+    </script>
+  </body>
+</html>
