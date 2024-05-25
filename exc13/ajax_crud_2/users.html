@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Users Management</title>
+    <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
+    <style>
+      nav a {
+        margin-right: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="users.html">Users</a>
+      <a href="books.html">Books</a>
+    </nav>
+
+    <h2>Create User</h2>
+    <form id="createUserForm">
+      <input
+        type="text"
+        id="createFirstName"
+        placeholder="First Name"
+        required
+      />
+      <input type="text" id="createLastName" placeholder="Last Name" required />
+      <button type="submit">Create</button>
+    </form>
+
+    <h2>Delete User</h2>
+    <form id="deleteUserForm">
+      <input type="number" id="deleteUserId" placeholder="User ID" required />
+      <button type="submit">Delete</button>
+    </form>
+
+    <h2>Update User</h2>
+    <form id="updateUserForm">
+      <input type="number" id="updateUserId" placeholder="User ID" required />
+      <input
+        type="text"
+        id="updateFirstName"
+        placeholder="First Name"
+        required
+      />
+      <input type="text" id="updateLastName" placeholder="Last Name" required />
+      <button type="submit">Update</button>
+    </form>
+
+    <h2>All Users</h2>
+    <table id="usersTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <script>
+      let latestId = 0;
+      async function getAllUsers() {
+        try {
+          const response = await axios.get("http://localhost:8001/users");
+          const users = response.data;
+          const tableBody = document.querySelector("#usersTable tbody");
+          tableBody.innerHTML = "";
+          users.forEach((user) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `<td>${user.id}</td><td>${user.firstName}</td><td>${user.lastName}</td>`;
+            tableBody.appendChild(row);
+            if (user.id > latestId) {
+              latestId = user.id;
+            }
+          });
+        } catch (error) {
+          console.error("Error fetching users:", error);
+        }
+      }
+
+      document
+        .getElementById("createUserForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+          const firstName = document.getElementById("createFirstName").value;
+          const lastName = document.getElementById("createLastName").value;
+          latestId++;
+          try {
+            await axios.post("http://localhost:8001/users", {
+              id: latestId,
+              firstName,
+              lastName,
+            });
+            getAllUsers();
+          } catch (error) {
+            console.error("Error creating user:", error);
+          }
+        });
+
+      document
+        .getElementById("deleteUserForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+          const userId = document.getElementById("deleteUserId").value;
+          try {
+            await axios.delete(`http://localhost:8001/users/${userId}`);
+            getAllUsers();
+          } catch (error) {
+            console.error("Error deleting user:", error);
+          }
+        });
+
+      document
+        .getElementById("updateUserForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+          const userId = document.getElementById("updateUserId").value;
+          const firstName = document.getElementById("updateFirstName").value;
+          const lastName = document.getElementById("updateLastName").value;
+          try {
+            await axios.put(`http://localhost:8001/users/${userId}`, {
+              firstName,
+              lastName,
+            });
+            getAllUsers();
+          } catch (error) {
+            console.error("Error updating user:", error);
+          }
+        });
+
+      getAllUsers();
+    </script>
+  </body>
+</html>

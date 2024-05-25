@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Books Management</title>
+    <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
+    <style>
+      nav a {
+        margin-right: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="users.html">Users</a>
+      <a href="books.html">Books</a>
+    </nav>
+
+    <h2>Create Book</h2>
+    <form id="createBookForm">
+      <input type="text" id="createBookTitle" placeholder="Title" required />
+      <input type="text" id="createBookAuthor" placeholder="Author" required />
+      <button type="submit">Create</button>
+    </form>
+
+    <h2>Delete Book</h2>
+    <form id="deleteBookForm">
+      <input type="number" id="deleteBookId" placeholder="Book ID" required />
+      <button type="submit">Delete</button>
+    </form>
+
+    <h2>Update Book</h2>
+    <form id="updateBookForm">
+      <input type="number" id="updateBookId" placeholder="Book ID" required />
+      <input type="text" id="updateBookTitle" placeholder="Title" required />
+      <input type="text" id="updateBookAuthor" placeholder="Author" required />
+      <button type="submit">Update</button>
+    </form>
+
+    <h2>All Books</h2>
+    <table id="booksTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Author</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <script>
+      let latestBookId = 0;
+      async function getAllBooks() {
+        try {
+          const response = await axios.get("http://localhost:8001/books");
+          const books = response.data;
+          const tableBody = document.querySelector("#booksTable tbody");
+          tableBody.innerHTML = "";
+          books.forEach((book) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `<td>${book.id}</td><td>${book.title}</td><td>${book.author}</td>`;
+            tableBody.appendChild(row);
+            if (book.id > latestBookId) {
+              latestBookId = book.id;
+            }
+          });
+        } catch (error) {
+          console.error("Error fetching books:", error);
+        }
+      }
+
+      document
+        .getElementById("createBookForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+          const title = document.getElementById("createBookTitle").value;
+          const author = document.getElementById("createBookAuthor").value;
+          try {
+            await axios.post("http://localhost:8001/books", {
+              id: latestBookId,
+              title,
+              author,
+            });
+            latestBookId++;
+            getAllBooks();
+          } catch (error) {
+            console.error("Error creating book:", error);
+          }
+        });
+
+      document
+        .getElementById("deleteBookForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+          const bookId = document.getElementById("deleteBookId").value;
+          try {
+            await axios.delete(`http://localhost:8001/books/${bookId}`);
+            getAllBooks();
+          } catch (error) {
+            console.error("Error deleting book:", error);
+          }
+        });
+
+      document
+        .getElementById("updateBookForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+          const bookId = document.getElementById("updateBookId").value;
+          const title = document.getElementById("updateBookTitle").value;
+          const author = document.getElementById("updateBookAuthor").value;
+          try {
+            await axios.put(`http://localhost:8001/books/${bookId}`, {
+              title,
+              author,
+            });
+            getAllBooks();
+          } catch (error) {
+            console.error("Error updating book:", error);
+          }
+        });
+
+      // Load books on page load
+      getAllBooks();
+    </script>
+  </body>
+</html>
